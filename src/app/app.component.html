@@ -1,0 +1,16 @@
+<div class="workspace" [class.show-details]="selectedCollaborator">
+
+  <div class="table-wrapper">
+    <app-collaborators-list
+      [collaborators]="collaborators"
+      (selectedCollaborator)="showDetails($event)">
+    </app-collaborators-list>
+  </div>
+
+  <div class="details-wrapper">
+    <app-collaborator-details
+      [collaborator]="selectedCollaborator" (collaboratorUpdated)="updateCollaborator($event)">
+    </app-collaborator-details>
+  </div>
+
+</div>

@@ -1,0 +1,54 @@
+:host, :host ::ng-deep body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.workspace {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 3rem 1rem;
+  transition: justify-content 0.6s ease;
+}
+
+
+.table-wrapper {
+  flex: 1 1 900px;                  
+  max-width: 900px;
+  transition: max-width 0.6s ease, transform 0.6s ease;
+}
+
+.details-wrapper {
+  flex: 0 0 500px;
+  opacity: 1;
+  transform: translateX(40px);
+  transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+}
+
+.workspace.show-details {
+  justify-content: flex-start;
+}
+
+.workspace.show-details .table-wrapper {
+  max-width: 600px;
+}
+
+.workspace.show-details .details-wrapper {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    flex-direction: column;
+  }
+  .table-wrapper,
+  .workspace.show-details .table-wrapper {
+    max-width: 100%;
+  }
+  .details-wrapper {
+    width: 100%;
+    transform: translateY(20px);
+  }
+}
