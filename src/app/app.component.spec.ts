@@ -31,22 +31,32 @@ describe('AppComponent', () => {
     listComponent.selectedCollaborator.emit(testCollaborator);
     fixture.detectChanges();
 
-    expect(component.selectedCollaborator).toEqual(testCollaborator);
+    expect(component.selected()).toEqual(testCollaborator);
 
     const detailsComponent: CollaboratorDetailsComponent = fixture.debugElement.query(By.directive(CollaboratorDetailsComponent)).componentInstance;
 
     expect(detailsComponent.collaborator).toEqual(testCollaborator);
   });
 
-  it('should update collaborators list and selectedCollaborator when updateCollaborator is called', () => {
-    component.collaborators = [
-      { id: 1, name: 'Joao', surname: 'Silva', email: 'joao@email.com', initDate: new Date(), endDate: new Date() }
-    ];
+  it('should update collaborators signal and selected signal when service.updateCollaborator is called', () => {
 
-    const updated = { id: 1, name: 'Joazinho', surname: 'Silva', email: 'joao@email.com', initDate: new Date(), endDate: new Date() };
-    component.updateCollaborator(updated);
+    const original = {
+    id: 1,
+    name: 'Joao',
+    surname: 'Silva',
+    email: 'joao@email.com',
+    initDate: new Date(),
+    endDate: new Date()
+  };
+  component.service.loadCollaborators([original]);
+  component.service.selectCollaborator(original);
+  fixture.detectChanges();
 
-    expect(component.collaborators[0].name).toEqual('Joazinho');
-    expect(component.selectedCollaborator).toEqual(updated);
-  });
+  const updated = { ...original, name: 'Joazinho' };
+  component.service.updateCollaborator(updated);
+  fixture.detectChanges();
+
+  expect(component.collaborators()[0].name).toBe('Joazinho');
+  expect(component.selected()!.name).toBe('Joazinho');
+});
 });
