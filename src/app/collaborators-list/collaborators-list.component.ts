@@ -1,20 +1,20 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, computed} from '@angular/core';
 import { Collaborator } from '../collaborator';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { CollaboratorsService } from '../collaborators.service';
 
 @Component({
   selector: 'app-collaborators-list',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule],
   templateUrl: './collaborators-list.component.html'
 })
 export class CollaboratorsListComponent {
-  @Input() collaborators: Collaborator[] = [];
+  collaborators = computed(() => this.service.collaboratorsSignal());
 
-  @Output() selectedCollaborator = new EventEmitter<Collaborator>();
+  constructor(private service : CollaboratorsService) {}
 
   selectCollaborator(collaborator: Collaborator) {
-    this.selectedCollaborator.emit(collaborator);
+    this.service.selectCollaborator(collaborator);
   }
 }
 

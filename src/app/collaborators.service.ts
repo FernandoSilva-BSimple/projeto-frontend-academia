@@ -6,8 +6,8 @@ export class CollaboratorsService {
   private collaborators = signal<Collaborator[]>([]);
   private selected = signal<Collaborator | null>(null);
 
-  collaboratorsSignal = this.collaborators.asReadonly();
-  selectedSignal = this.selected.asReadonly();
+  readonly collaboratorsSignal = this.collaborators.asReadonly();
+  readonly selectedSignal = this.selected.asReadonly();
 
   loadCollaborators(data: Collaborator[]) {
     const d = data.map(c => ({ ...c }));

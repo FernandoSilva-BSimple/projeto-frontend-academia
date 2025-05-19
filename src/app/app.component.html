@@ -1,11 +1,11 @@
 <div class="workspace" [class.show-details]="selected()">
   <div class="table-wrapper">
-    <app-collaborators-list [collaborators]="collaborators()" (selectedCollaborator)="service.selectCollaborator($event)">
+    <app-collaborators-list >
     </app-collaborators-list>
   </div>
 
   <div class="details-wrapper">
-    <app-collaborator-details [collaborator]="selected() || undefined" (collaboratorUpdated)="service.updateCollaborator($event)">
+    <app-collaborator-details >
     </app-collaborator-details>
   </div>
 </div>

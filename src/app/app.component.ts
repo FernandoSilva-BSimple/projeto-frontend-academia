@@ -13,7 +13,6 @@ import { CollaboratorsData } from './collaborators.data';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  collaborators = computed(() => this.service.collaboratorsSignal());
   selected = computed(() => this.service.selectedSignal());
 
   constructor(public service: CollaboratorsService) {

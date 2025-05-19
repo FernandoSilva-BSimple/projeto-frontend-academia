@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, computed, effect } from '@angular/core';
 import { Collaborator } from '../collaborator';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CollaboratorsService } from '../collaborators.service';
 
 @Component({
   selector: 'app-collaborator-details',
@@ -9,25 +10,31 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './collaborator-details.component.html',
   styleUrl: "./collaborator-details.component.css"
 })
-export class CollaboratorDetailsComponent implements OnChanges{
-  @Input() collaborator?: Collaborator;
-  @Output() collaboratorUpdated = new EventEmitter<Collaborator>();
-
+export class CollaboratorDetailsComponent {
   editMode = false;
   draft?: Collaborator;
 
-  ngOnChanges() {
-    this.draft = this.collaborator ? {...this.collaborator} : undefined;
-  }
+  collaborator = computed(() => this.service.selectedSignal())
 
+  constructor(private service: CollaboratorsService) {
+  effect(() => {
+    const c = this.collaborator();
+    this.draft = c ? { ...c } : undefined;
+    this.editMode = false;
+  });
+}
+    
   enableEdit() {this.editMode = true};
 
   cancel() {this.editMode = false};
 
   save()
   {
-    this.collaboratorUpdated.emit(this.draft);
-    this.editMode = false;
+    if(this.draft){
+      this.service.updateCollaborator(this.draft)
+      this.editMode = false;
+    }
+   
   }
   
 }
