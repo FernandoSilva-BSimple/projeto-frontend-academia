@@ -1,23 +1,12 @@
-<div class="workspace" [class.show-details]="selectedCollabValue">
-  <div class="left-column">
-    <div class="table-wrapper">
-      <app-collaborators-list></app-collaborators-list>
-    </div>
-
-    <div class="bullets-wrapper">
-      <app-collaborators-list-bullets></app-collaborators-list-bullets>
-    </div>
-  </div>
-
-  <div>
+<div class="workspace">
+  <div class="column">
+    <app-collaborators-list></app-collaborators-list>
+    <app-collaborators-list-bullets></app-collaborators-list-bullets>
     <app-projects-list-component></app-projects-list-component>
   </div>
 
-  <div class="details-wrapper">
+  <div class="column">
     <app-collaborator-details></app-collaborator-details>
-  </div>
-
-  <div>
     <app-project-details></app-project-details>
   </div>
 </div>

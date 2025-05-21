@@ -1,16 +1,21 @@
 .workspace {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 2rem;
-  padding: 3rem 1rem;
-  transition: justify-content 0.6s ease;
-  margin-top: 6rem;
+  display: flex;          /* 2 colunas lado a lado                */
+  align-items: flex-start;/* alinha ao topo                        */
+  gap: 2rem;              /* espaço entre colunas                  */
+  padding: 1rem;          /* pequena margem interna                */
 }
 
-.details-wrapper {
-  flex: 0 0 500px;
-  opacity: 1;
-  transform: translateX(40px);
-  transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+/* ambas as colunas ocupam metade da tela (pode ajustar com flex-basis) */
+.column { 
+  flex: 1 1 50%;
 }
+
+/* garante um pequeno espaçamento vertical entre os blocos dentro de cada coluna */
+.column > * + * {
+  margin-top: 1rem;
+}
+
+/* --- estilo genérico de tabela bem simples --- */
+table       { width: 100%; border-collapse: collapse; }
+th, td      { padding: .5rem; border: 1px solid #ccc; text-align: left; }
+thead tr    { background: #f2f2f2; font-weight: 600; }
