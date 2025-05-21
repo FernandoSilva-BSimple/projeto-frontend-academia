@@ -3,6 +3,7 @@ import { Collaborator } from '../collaborator';
 import { CommonModule } from '@angular/common';
 import { CollaboratorsService } from '../collaborators.service';
 import { RouterModule } from '@angular/router';
+import { effect } from '@angular/core';
 
 
 @Component({
@@ -11,12 +12,15 @@ import { RouterModule } from '@angular/router';
   templateUrl: './collaborators-list.component.html'
 })
 export class CollaboratorsListComponent {
-  collaborators = computed(() => this.service.collaboratorsSignal());
+  collaboratorsList: Collaborator[] = [];
 
-  constructor(private service : CollaboratorsService) {}
+  constructor(private service: CollaboratorsService) {
+    effect(() => {
+      this.collaboratorsList = this.service.collaboratorsSignal();
+    });
+  }
 
   selectCollaborator(collaborator: Collaborator) {
     this.service.selectCollaborator(collaborator);
   }
 }
-

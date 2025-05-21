@@ -1,0 +1,44 @@
+<div *ngIf="project() && !editMode" class="project-card">
+  <h2>Project Details</h2>
+  <div class="details">
+    <div class="details-item"><strong>Title:</strong> {{ project()?.title }}</div>
+    <div class="details-item"><strong>Acronym:</strong> {{ project()?.acronym }}</div>
+    <div class="details-item"><strong>Initial Date:</strong> {{ project()?.initDate| date }}</div>
+    <div class="details-item"><strong>End Date:</strong> {{ project()?.endDate| date }}</div>
+  </div>
+  <button class="details-button" (click)="enableEdit()">Edit</button>
+</div>
+
+<div *ngIf="!project" class="empty-state">
+  <p>Select a project!</p>
+</div>
+
+<form *ngIf="editMode" (ngSubmit)="save()" class="project-card">
+
+  <h2>Edit Project</h2>
+
+  <label class="details-item">
+    <strong>Title:</strong>
+    <input [(ngModel)]="draft!.title" name="title"/>
+  </label>
+
+  <label class="details-item">
+    <strong>Acronym:</strong>
+    <input [(ngModel)]="draft!.acronym" name="acronym"/>
+  </label>
+
+  <label class="details-item">
+    <strong>Initial Date:</strong>
+    <input type="date" [(ngModel)]="draft!.initDate" name="initDate" />
+  </label>
+
+  <label class="details-item">
+    <strong>End Date:</strong>
+    <input type="date" [(ngModel)]="draft!.endDate" name="endDate" />
+  </label>
+
+  <div class="actions">
+    <button type="submit" class="details-button">Save</button>
+    <button type="button" class="details-button" (click)="cancel()">Cancel</button>
+  </div>
+</form>

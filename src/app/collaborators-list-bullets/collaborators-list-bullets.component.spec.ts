@@ -7,10 +7,9 @@ describe('CollaboratorsListBulletsComponent', () => {
   let fixture: ComponentFixture<CollaboratorsListBulletsComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [CollaboratorsListBulletsComponent]
-    })
-    .compileComponents();
+   await TestBed.configureTestingModule({
+  imports: [CollaboratorsListBulletsComponent]
+  }).compileComponents();
 
     fixture = TestBed.createComponent(CollaboratorsListBulletsComponent);
     component = fixture.componentInstance;

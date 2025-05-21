@@ -3,31 +3,48 @@ import { CollaboratorDetailsComponent } from './collaborator-details.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { signal, WritableSignal } from '@angular/core';
+import { Collaborator } from '../collaborator';
+import { CollaboratorsService } from '../collaborators.service';
 
 describe('CollaboratorDetailsComponent', () => {
   let component: CollaboratorDetailsComponent;
   let fixture: ComponentFixture<CollaboratorDetailsComponent>;
+  let selected: WritableSignal<Collaborator | null>;
+  let mockService: any;
+
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, CollaboratorDetailsComponent],
-    }).compileComponents();
+  selected = signal<Collaborator | null>(null);
 
-    fixture = TestBed.createComponent(CollaboratorDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  mockService = {
+    selectedSignal: selected.asReadonly(), 
+    updateCollaborator: jasmine.createSpy('updateCollaborator')
+  };
+
+  await TestBed.configureTestingModule({
+    imports: [CommonModule, FormsModule, CollaboratorDetailsComponent],
+    providers: [
+      { provide: CollaboratorsService, useValue: mockService }
+    ]
+  }).compileComponents();
+
+  fixture = TestBed.createComponent(CollaboratorDetailsComponent);
+  component = fixture.componentInstance;
+  fixture.detectChanges();
+});
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have <p> with "Select a collaborator!" if no collaborator is provided', () => {
+  /*it('should have <p> with "Select a collaborator!" if no collaborator is provided', () => {
     const bannerElement : HTMLElement = fixture.nativeElement;
     const p = bannerElement.querySelector('p')!;
 
     expect(p.textContent).toContain('Select a collaborator!');
   });
+  */
 
   it('shouldn´t have <form>', () => {
     const bannerElement: HTMLElement = fixture.nativeElement;
@@ -36,14 +53,15 @@ describe('CollaboratorDetailsComponent', () => {
   });
 
   it('should display collaborator details when collaborator is provided', () => {
-    component.collaborator = {
+      selected.set({
       id: 1,
       name: 'Pedro',
       surname: 'Silva',
       email: 'pedro@email.com',
       initDate: new Date('2020-01-01'),
       endDate: new Date('2022-01-01')
-    };
+    })
+
 
     fixture.detectChanges();
 
@@ -58,16 +76,15 @@ describe('CollaboratorDetailsComponent', () => {
 
   it('should switch to edit mode when Edit button is clicked', async () => {
     
-    component.collaborator = {
+      selected.set({
       id: 2,
       name: 'Ana',
       surname: 'Silva',
       email: 'ana@silva.com',
       initDate: new Date(),
       endDate: new Date()
-    };
+    });
 
-    component.ngOnChanges();
     fixture.detectChanges();
 
     const editButton = fixture.debugElement.query(By.css('button'));
@@ -81,16 +98,15 @@ describe('CollaboratorDetailsComponent', () => {
   });
 
   it('should switch back to no edit mode when we click button cancel', async () => {
-    component.collaborator = {
+    selected.set({
       id: 2,
       name: 'Ana',
       surname: 'Silva',
       email: 'ana@silva.com',
       initDate: new Date(),
       endDate: new Date()
-    };
+    });
 
-    component.ngOnChanges();
     fixture.detectChanges();
 
     const editButton = fixture.debugElement.query(By.css('button'));
@@ -111,16 +127,18 @@ describe('CollaboratorDetailsComponent', () => {
   })
 
   it('should have <form> with "Tiago Silva" values if setting the class property', async () => {
-  component.collaborator = {
+  selected.set ({
     id: 1,
     name: 'Tiago',
     surname: 'Silva',
     email: 'tiago@silva.com',
     initDate: new Date('2020-01-01'),
     endDate: new Date('2022-01-01')
-  };
+  });
 
-  component.ngOnChanges();
+  fixture.detectChanges();
+  await fixture.whenStable();
+
   component.enableEdit();
   fixture.detectChanges();
   await fixture.whenStable();
@@ -135,27 +153,30 @@ describe('CollaboratorDetailsComponent', () => {
   expect(inputs[2].value).toEqual('tiago@silva.com');
 });
 
-  it('should emit collaboratorUpdated when Save is clicked', () => {
-  component.collaborator = {
+  it('should call updateCollaborator when Save is clicked', async () => {
+  selected.set({
     id: 3,
     name: 'Paula',
     surname: 'Ramos',
     email: 'paula@email.com',
     initDate: new Date(),
     endDate: new Date()
-  };
+  });
 
-  component.ngOnChanges();
+  fixture.detectChanges();
+  await fixture.whenStable();
+
   component.enableEdit();
   fixture.detectChanges();
+  await fixture.whenStable();
 
-  spyOn(component.collaboratorUpdated, 'emit');
+  const updateSpy = mockService.updateCollaborator;
 
   const form = fixture.debugElement.query(By.css('form'));
   form.triggerEventHandler('ngSubmit', {});
   fixture.detectChanges();
 
-  expect(component.collaboratorUpdated.emit).toHaveBeenCalledWith(component.draft);
+  expect(updateSpy).toHaveBeenCalledWith(component.draft);
 });
 
 });

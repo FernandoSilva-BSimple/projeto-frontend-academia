@@ -1,0 +1,22 @@
+<div class="projects-list-container">
+    <h2>Projects List</h2>
+
+    <table class="projects-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Acronym</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let project of projectsList">
+                <td>{{project.title}}</td>
+                <td>{{project.acronym}}</td>
+                <td>
+                    <button (click)="selectProject(project)" aria-label="See Details" class="details-button">🔍</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

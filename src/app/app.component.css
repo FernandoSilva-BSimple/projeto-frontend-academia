@@ -5,24 +5,7 @@
   gap: 2rem;
   padding: 3rem 1rem;
   transition: justify-content 0.6s ease;
-}
-
-/* Coluna esquerda = tabela + bullets */
-.left-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  flex: 1 1 900px;
-  max-width: 900px;
-  transition: max-width 0.6s ease, transform 0.6s ease;
-}
-
-.table-wrapper {
-  width: 100%;
-}
-
-.list-wrapper {
-  width: 100%;
+  margin-top: 6rem;
 }
 
 .details-wrapper {
@@ -30,34 +13,4 @@
   opacity: 1;
   transform: translateX(40px);
   transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
-}
-
-/* Quando mostrar detalhes */
-.workspace.show-details {
-  justify-content: flex-start;
-}
-
-.workspace.show-details .left-wrapper {
-  max-width: 600px;
-}
-
-.workspace.show-details .details-wrapper {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Responsivo */
-@media (max-width: 900px) {
-  .workspace {
-    flex-direction: column;
-  }
-
-  .left-wrapper {
-    max-width: 100%;
-  }
-
-  .details-wrapper {
-    width: 100%;
-    transform: translateY(20px);
-  }
 }
