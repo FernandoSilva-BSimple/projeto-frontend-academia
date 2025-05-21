@@ -6,11 +6,11 @@ import { RouterModule } from '@angular/router';
 
 
 @Component({
-  selector: 'app-collaborators-list',
+  selector: 'app-collaborators-list-bullets',
   imports: [CommonModule, RouterModule],
-  templateUrl: './collaborators-list.component.html'
+  templateUrl: './collaborators-list-bullets.component.html'
 })
-export class CollaboratorsListComponent {
+export class CollaboratorsListBulletsComponent {
   collaborators = computed(() => this.service.collaboratorsSignal());
 
   constructor(private service : CollaboratorsService) {}

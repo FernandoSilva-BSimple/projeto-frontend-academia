@@ -4,11 +4,12 @@ import { CollaboratorsListComponent } from './collaborators-list/collaborators-l
 import { CollaboratorDetailsComponent } from './collaborator-details/collaborator-details.component';
 import { CollaboratorsService } from './collaborators.service';
 import { CollaboratorsData } from './collaborators.data';
+import { CollaboratorsListBulletsComponent } from './collaborators-list-bullets/collaborators-list-bullets.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, CollaboratorsListComponent, CollaboratorDetailsComponent],
+  imports: [CommonModule, CollaboratorsListComponent, CollaboratorDetailsComponent, CollaboratorsListBulletsComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
