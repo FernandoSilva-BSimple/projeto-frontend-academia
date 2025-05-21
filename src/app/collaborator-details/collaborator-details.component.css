@@ -74,11 +74,11 @@ h2 {
 }
 
 .details-card {
-  border: 1px solid #ccc;   /* contorno simples */
-  border-radius: 4px;       /* leve arredondado */
-  padding: 1rem;            /* espaço interno   */
-  width: 100%;              /* ocupa a largura da coluna */
-  font-size: 0.95rem;       /* texto um pouco menor       */
+  border: 1px solid #ccc;  
+  border-radius: 4px;       
+  padding: 1rem;          
+  width: 100%;              
+  font-size: 0.95rem;      
 }
 
 .details-card h3 {
@@ -86,7 +86,6 @@ h2 {
   font-size: 1.2rem;
 }
 
-/* botão genérico – opcional */
 .details-card button {
   padding: 0.4rem 0.8rem;
   cursor: pointer;
