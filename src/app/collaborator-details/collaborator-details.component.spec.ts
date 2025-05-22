@@ -38,13 +38,13 @@ describe('CollaboratorDetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  /*it('should have <p> with "Select a collaborator!" if no collaborator is provided', () => {
+  it('should have <p> with "Select a collaborator!" if no collaborator is provided', () => {
     const bannerElement : HTMLElement = fixture.nativeElement;
     const p = bannerElement.querySelector('p')!;
 
     expect(p.textContent).toContain('Select a collaborator!');
   });
-  */
+  
 
   it('shouldn´t have <form>', () => {
     const bannerElement: HTMLElement = fixture.nativeElement;

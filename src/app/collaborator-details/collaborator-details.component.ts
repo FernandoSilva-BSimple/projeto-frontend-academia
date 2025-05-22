@@ -14,12 +14,12 @@ export class CollaboratorDetailsComponent {
   editMode = false;
   draft?: Collaborator;
 
-  collaborator = computed(() => this.service.selectedSignal())
+  collaborator: Collaborator | null = null;
 
   constructor(private service: CollaboratorsService) {
   effect(() => {
-    const c = this.collaborator();
-    this.draft = c ? { ...c } : undefined;
+    this.collaborator = this.service.selectedSignal();
+    this.draft = this.collaborator ? { ...this.collaborator } : undefined;
     this.editMode = false;
   });
 }
