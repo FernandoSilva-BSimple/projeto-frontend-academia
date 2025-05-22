@@ -3,10 +3,23 @@
     <app-collaborators-list></app-collaborators-list>
     <app-collaborators-list-bullets></app-collaborators-list-bullets>
     <app-projects-list-component></app-projects-list-component>
+    <app-association-project-collaborator></app-association-project-collaborator>
   </div>
 
-  <div class="column">
-    <app-collaborator-details></app-collaborator-details>
-    <app-project-details></app-project-details>
-  </div>
+<div class="column">
+
+  <app-collaborator-details></app-collaborator-details>
+
+  <ng-container *ngIf="!holidayPlansService.editingSignal(); else editorTpl">
+    <app-holiday-plan-details></app-holiday-plan-details>
+  </ng-container>
+
+  <ng-template #editorTpl>
+    <app-holiday-plan-editor></app-holiday-plan-editor>
+  </ng-template>
+
+  <app-project-details></app-project-details>
+
+</div>
+
 </div>

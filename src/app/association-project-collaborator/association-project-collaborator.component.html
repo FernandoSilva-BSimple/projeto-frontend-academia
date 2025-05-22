@@ -1,0 +1,14 @@
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Collaborators</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entry of projectAcronymsWithCollaborators">
+      <td>{{ entry.acronym }}</td>
+      <td>{{ entry.collaborators.join(', ') }}</td>
+    </tr>
+  </tbody>
+</table>

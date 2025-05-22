@@ -1,0 +1,15 @@
+<form *ngIf="draft" (ngSubmit)="save()" class="details-card">
+  <h3>Edit Holiday Plan</h3>
+
+  <div *ngFor="let pr of draft.periods; let i = index">
+    <input type="date" [(ngModel)]="draft.periods[i].initDate" name="init{{i}}">
+    <input type="date" [(ngModel)]="draft.periods[i].endDate"  name="end{{i}}">
+  </div>
+
+  <button type="button" (click)="add()">Add Period</button>
+
+  <div style="margin-top:1rem">
+    <button type="submit">Save</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>

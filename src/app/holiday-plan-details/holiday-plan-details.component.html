@@ -1,0 +1,17 @@
+<div *ngIf="plan() as p" class="details-card">
+  <h3>Holiday Plan</h3>
+
+  <ng-container *ngIf="p.periods.length; else empty">
+    <ul>
+      <li *ngFor="let pr of p.periods">
+        {{ pr.initDate | date }} → {{ pr.endDate | date }}
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #empty>
+    <p>No holidays yet.</p>
+  </ng-template>
+
+  <button (click)="edit()">Create / Edit Holidays</button>
+</div>

@@ -8,6 +8,7 @@
         <th>Surname</th>
         <th>Email</th>
         <th>Details</th>
+        <th>Holidays</th>
       </tr>
     </thead>
     <tbody>
@@ -15,9 +16,8 @@
         <td>{{ collaborator.name }}</td>
         <td>{{ collaborator.surname }}</td>
         <td>{{ collaborator.email }}</td>
-        <td>
-          <button (click)="selectCollaborator(collaborator)" aria-label="See Details" class="details-button">🔍</button>
-        </td>
+        <td><button (click)="selectCollaborator(collaborator)" aria-label="See Details" class="details-button">🔍</button>        </td>
+        <td><button (click)="showHolidays(collaborator)">🌴</button></td>
       </tr>
     </tbody>
   </table>

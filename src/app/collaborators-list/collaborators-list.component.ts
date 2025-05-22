@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CollaboratorsService } from '../collaborators.service';
 import { RouterModule } from '@angular/router';
 import { effect } from '@angular/core';
+import { HolidayPlansService } from '../holiday-plans.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { effect } from '@angular/core';
 export class CollaboratorsListComponent {
   collaboratorsList: Collaborator[] = [];
 
-  constructor(private service: CollaboratorsService) {
+  constructor(private service: CollaboratorsService, private holidaysService: HolidayPlansService) {
     effect(() => {
       this.collaboratorsList = this.service.collaboratorsSignal();
     });
@@ -22,5 +23,9 @@ export class CollaboratorsListComponent {
 
   selectCollaborator(collaborator: Collaborator) {
     this.service.selectCollaborator(collaborator);
+  }
+
+  showHolidays(collaborator: Collaborator){
+    this.holidaysService.selectPlanByCollaborator(collaborator.id);
   }
 }
