@@ -6,7 +6,6 @@ import { CollaboratorsListBulletsComponent } from './collaborators-list-bullets/
 import {  signal, WritableSignal } from '@angular/core';
 import { CollaboratorsService } from './collaborators.service';
 import { Collaborator } from './collaborator';
-import { By } from '@angular/platform-browser';
 import { HolidayPlan } from './holiday-plan';
 import { HolidayPlansService } from './holiday-plans.service';
 
@@ -78,7 +77,7 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show details when a collaborator is selected via service', () => {
+  it('should show details when a collaborator is selected', () => {
     const testCollaborator: Collaborator = {
       id: 1,
       name: 'Joao',
