@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { HolidayPlan } from './holiday-plan';
+import { HolidayPlan } from '../../interfaces/holiday-plan';
 
 @Injectable({ providedIn: 'root' })
 export class HolidayPlansService {

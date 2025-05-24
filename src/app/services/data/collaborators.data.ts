@@ -1,4 +1,4 @@
-import { Collaborator } from "./collaborator";
+import { Collaborator } from "../../interfaces/collaborator";
 
 export class CollaboratorsData {
   static collaborators: Collaborator[] = [

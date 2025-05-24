@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Project } from '../project';
-import { ProjectsService } from '../projects.service';
+import { Project } from '../../interfaces/project';
+import { ProjectsService } from '../../services/signals/projects.service';
 
 @Component({
   selector: 'app-project-details',

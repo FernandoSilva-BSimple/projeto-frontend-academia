@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { CollaboratorsListComponent } from './collaborators-list/collaborators-list.component';
-import { CollaboratorDetailsComponent } from './collaborator-details/collaborator-details.component';
+import { CollaboratorsListComponent } from './components/collaborators-list/collaborators-list.component';
+import { CollaboratorDetailsComponent } from './components/collaborator-details/collaborator-details.component';
 
 export const routes: Routes = [
   { path: '', component: CollaboratorsListComponent },

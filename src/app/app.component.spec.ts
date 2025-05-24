@@ -1,14 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { CollaboratorsListComponent } from './collaborators-list/collaborators-list.component';
-import { CollaboratorDetailsComponent } from './collaborator-details/collaborator-details.component';
-import { CollaboratorsListBulletsComponent } from './collaborators-list-bullets/collaborators-list-bullets.component';
+import { CollaboratorsListComponent } from './components/collaborators-list/collaborators-list.component';
+import { CollaboratorDetailsComponent } from './components/collaborator-details/collaborator-details.component';
+import { CollaboratorsListBulletsComponent } from './components/collaborators-list-bullets/collaborators-list-bullets.component';
 import {  signal, WritableSignal } from '@angular/core';
-import { CollaboratorsService } from './collaborators.service';
-import { Collaborator } from './collaborator';
-import { By } from '@angular/platform-browser';
-import { HolidayPlan } from './holiday-plan';
-import { HolidayPlansService } from './holiday-plans.service';
+import { CollaboratorsService } from './services/signals/collaborators.service'; 
+import { Collaborator } from './interfaces/collaborator';
+import { HolidayPlan } from './interfaces/holiday-plan';
+import { HolidayPlansService } from './services/signals/holiday-plans.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;

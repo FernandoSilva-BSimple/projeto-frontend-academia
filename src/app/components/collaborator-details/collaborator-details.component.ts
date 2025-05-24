@@ -1,8 +1,8 @@
 import { Component, computed, effect } from '@angular/core';
-import { Collaborator } from '../collaborator';
+import { Collaborator } from '../../interfaces/collaborator';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CollaboratorsService } from '../collaborators.service';
+import { CollaboratorsService } from '../../services/signals/collaborators.service';
 
 @Component({
   selector: 'app-collaborator-details',

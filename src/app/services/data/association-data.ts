@@ -1,4 +1,4 @@
-import { Association } from './association';
+import { Association } from "../../interfaces/association";
 
 export class AssociationData {
   static associations: Association[] = [

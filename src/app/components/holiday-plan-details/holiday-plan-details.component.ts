@@ -1,6 +1,6 @@
 import { Component, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HolidayPlansService } from '../holiday-plans.service';
+import { HolidayPlansService } from '../../services/signals/holiday-plans.service';
 
 @Component({
   selector: 'app-holiday-plan-details',

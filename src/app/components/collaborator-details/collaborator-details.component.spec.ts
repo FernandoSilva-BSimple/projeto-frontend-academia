@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { signal, WritableSignal } from '@angular/core';
-import { Collaborator } from '../collaborator';
-import { CollaboratorsService } from '../collaborators.service';
+import { Collaborator } from '../../interfaces/collaborator';
+import { CollaboratorsService } from '../../services/signals/collaborators.service';
 
 describe('CollaboratorDetailsComponent', () => {
   let component: CollaboratorDetailsComponent;

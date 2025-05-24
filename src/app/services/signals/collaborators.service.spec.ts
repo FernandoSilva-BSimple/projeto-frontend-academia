@@ -1,5 +1,5 @@
 import { CollaboratorsService } from './collaborators.service';
-import { Collaborator } from './collaborator';
+import { Collaborator } from '../../interfaces/collaborator';
 
 describe('CollaboratorsService', () => {
   let service: CollaboratorsService;

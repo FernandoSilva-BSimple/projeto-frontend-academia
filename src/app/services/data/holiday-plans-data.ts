@@ -1,4 +1,4 @@
-import { HolidayPlan } from './holiday-plan';
+import { HolidayPlan } from "../../interfaces/holiday-plan";
 
 export class HolidayPlansData {
   static holidayPlans: HolidayPlan[] = [

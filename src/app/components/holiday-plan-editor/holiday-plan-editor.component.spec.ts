@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal, WritableSignal } from '@angular/core';
 import { HolidayPlanEditorComponent } from './holiday-plan-editor.component';
-import { HolidayPlan } from '../holiday-plan';
-import { HolidayPlansService } from '../holiday-plans.service';
+import { HolidayPlan } from '../../interfaces/holiday-plan';
+import { HolidayPlansService } from '../../services/signals/holiday-plans.service';
 
 describe('HolidayPlanEditorComponent', () => {
   let component: HolidayPlanEditorComponent;

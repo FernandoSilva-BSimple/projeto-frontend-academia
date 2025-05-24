@@ -1,4 +1,4 @@
-import { Project } from "./project";
+import { Project } from "../../interfaces/project";
 
 export class ProjectsData {
   static projects: Project[] = [

@@ -1,7 +1,7 @@
 import { Component,  computed} from '@angular/core';
-import { Collaborator } from '../collaborator';
+import { Collaborator } from '../../interfaces/collaborator';
 import { CommonModule } from '@angular/common';
-import { CollaboratorsService } from '../collaborators.service';
+import { CollaboratorsService } from '../../services/signals/collaborators.service';
 import { RouterModule } from '@angular/router';
 
 

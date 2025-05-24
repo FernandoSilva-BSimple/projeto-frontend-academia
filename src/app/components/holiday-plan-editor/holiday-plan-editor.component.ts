@@ -1,8 +1,9 @@
 import { Component, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HolidayPlan } from '../holiday-plan';
-import { HolidayPlansService } from '../holiday-plans.service';
+import { HolidayPlan } from '../../interfaces/holiday-plan';
+import { HolidayPlansService } from '../../services/signals/holiday-plans.service';
+import { HolidayPeriod } from '../../interfaces/holiday-period';
 
 @Component({
   selector: 'app-holiday-plan-editor',
@@ -20,7 +21,7 @@ export class HolidayPlanEditorComponent {
       const p = this.editing();
       this.draft = p ? {
         ...p,
-        periods: p.periods.map(period => ({
+        periods: p.periods.map((period: HolidayPeriod) => ({
           ...period,
         initDate: this.formatDate(new Date(period.initDate)),
         endDate: this.formatDate(new Date(period.endDate))

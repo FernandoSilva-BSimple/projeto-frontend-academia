@@ -1,22 +1,22 @@
 import { Component, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CollaboratorsListComponent } from './collaborators-list/collaborators-list.component';
-import { CollaboratorDetailsComponent } from './collaborator-details/collaborator-details.component';
-import { CollaboratorsService } from './collaborators.service';
-import { CollaboratorsData } from './collaborators.data';
-import { CollaboratorsListBulletsComponent } from './collaborators-list-bullets/collaborators-list-bullets.component';
-import { Collaborator } from './collaborator';
+import { CollaboratorsListComponent } from './components/collaborators-list/collaborators-list.component';
+import { CollaboratorDetailsComponent } from './components/collaborator-details/collaborator-details.component';
+import { CollaboratorsService } from './services/signals/collaborators.service';
+import { CollaboratorsData } from './services/data/collaborators.data';
+import { CollaboratorsListBulletsComponent } from './components/collaborators-list-bullets/collaborators-list-bullets.component';
+import { Collaborator } from './interfaces/collaborator';
 import { effect } from '@angular/core';
-import { ProjectsListComponent } from './projects-list-component/projects-list-component.component';
-import { ProjectsService } from './projects.service';
-import { ProjectsData } from './project.data';
-import { Project } from './project';
-import { ProjectDetailsComponent } from "./project-details/project-details.component";
-import { HolidayPlansService } from './holiday-plans.service';
-import { HolidayPlansData } from './holiday-plans-data';
-import { HolidayPlanDetailsComponent } from './holiday-plan-details/holiday-plan-details.component';
-import { HolidayPlanEditorComponent } from './holiday-plan-editor/holiday-plan-editor.component';
-import { AssociationProjectCollaboratorComponent } from './association-project-collaborator/association-project-collaborator.component';
+import { ProjectsListComponent } from './components/projects-list-component/projects-list-component.component';
+import { ProjectsService } from './services/signals/projects.service';
+import { ProjectsData } from './services/data/project.data';
+import { Project } from './interfaces/project';
+import { ProjectDetailsComponent } from "./components/project-details/project-details.component";
+import { HolidayPlansService } from './services/signals/holiday-plans.service';
+import { HolidayPlansData } from './services/data/holiday-plans-data';
+import { HolidayPlanDetailsComponent } from './components/holiday-plan-details/holiday-plan-details.component';
+import { HolidayPlanEditorComponent } from './components/holiday-plan-editor/holiday-plan-editor.component';
+import { AssociationProjectCollaboratorComponent } from './components/association-project-collaborator/association-project-collaborator.component';
 @Component({
   selector: 'app-root',
   standalone: true,

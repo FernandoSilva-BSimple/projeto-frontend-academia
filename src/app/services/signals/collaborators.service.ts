@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Collaborator } from './collaborator';
+import { Collaborator } from '../../interfaces/collaborator';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorsService {
