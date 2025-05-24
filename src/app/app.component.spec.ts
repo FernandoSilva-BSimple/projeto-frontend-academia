@@ -77,7 +77,7 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show details when a collaborator is selected via service', () => {
+  it('should show details when a collaborator is selected', () => {
     const testCollaborator: Collaborator = {
       id: 1,
       name: 'Joao',
