@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Collaborator } from '../../interfaces/collaborator';
+import { CollaboratorsDataService } from '../data/collaborators-data.service';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorsService {
@@ -9,9 +10,11 @@ export class CollaboratorsService {
   readonly collaboratorsSignal = this.collaborators.asReadonly();
   readonly selectedSignal = this.selected.asReadonly();
 
-  loadCollaborators(data: Collaborator[]) {
-    const d = data.map(c => ({ ...c }));
-    this.collaborators.set(d);
+  constructor(private dataService: CollaboratorsDataService) {}
+
+  loadCollaboratorsFromDataService() {
+    const data = this.dataService.getCollaborators();
+    this.collaborators.set(data.map(c => ({ ...c })));
   }
 
   selectCollaborator(collaborator: Collaborator) {

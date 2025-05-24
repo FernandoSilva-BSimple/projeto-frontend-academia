@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsService } from '../../services/signals/projects.service';
 import { CollaboratorsService } from '../../services/signals/collaborators.service';
-import { AssociationData } from '../../services/data/association-data';
+import { AssociationData } from '../../services/data/associations-data.service';
 
 @Component({
   selector: 'app-association-project-collaborator',

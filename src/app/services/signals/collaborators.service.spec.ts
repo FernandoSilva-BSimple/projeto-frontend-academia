@@ -1,14 +1,21 @@
 import { CollaboratorsService } from './collaborators.service';
+import { CollaboratorsDataService } from '../data/collaborators-data.service';
 import { Collaborator } from '../../interfaces/collaborator';
 
 describe('CollaboratorsService', () => {
   let service: CollaboratorsService;
+  let mockDataService: jasmine.SpyObj<CollaboratorsDataService>;
 
-  beforeEach(() => service = new CollaboratorsService());
+  beforeEach(() => {
+    mockDataService = jasmine.createSpyObj('CollaboratorsDataService', ['getCollaborators']);
+    service = new CollaboratorsService(mockDataService);
+  });
 
-  it('loadCollaborators should replace the list immutably', () => {
+  it('loadCollaboratorsFromDataService should load a cloned list immutably', () => {
     const original: Collaborator[] = [{ id: 1, name: 'A' } as any];
-    service.loadCollaborators(original);
+    mockDataService.getCollaborators.and.returnValue(original);
+
+    service.loadCollaboratorsFromDataService();
 
     original[0].name = 'B';
 
@@ -17,15 +24,15 @@ describe('CollaboratorsService', () => {
 
   it('selectCollaborator should expose same object via selectedSignal', () => {
     const c = { id: 2, name: 'B' } as any;
-    service.loadCollaborators([c]);
+    service['collaborators'].set([c]);
     service.selectCollaborator(c);
 
     expect(service.selectedSignal()).toBe(c);
   });
 
-  it('updateCollaborator should sync list e selected', () => {
+  it('updateCollaborator should sync list and selected', () => {
     const c = { id: 3, name: 'C' } as any;
-    service.loadCollaborators([c]);
+    service['collaborators'].set([c]);
     service.selectCollaborator(c);
 
     const updated = { ...c, name: 'C-Updated' };
