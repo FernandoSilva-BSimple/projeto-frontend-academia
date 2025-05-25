@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, computed } from '@angular/core';
+import { Component, effect, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Project } from '../../interfaces/project';
 import { ProjectsService } from '../../services/signals/projects.service';
@@ -12,15 +12,14 @@ import { ProjectsService } from '../../services/signals/projects.service';
 })
 export class ProjectDetailsComponent {
   editMode = false;
-  draft?: Project;
-
-  project = computed(() => this.service.selectedSignal())
+  draft = signal<Project | null>(null);
+  project = signal<Project | null>(null);
 
   constructor(private service: ProjectsService){
     effect(() => {
-      const p = this.project();
-      this.draft = p ? { ...p } : undefined;
-      this.editMode = false;
+      this.project.set(this.service.selectedSignal());
+    this.draft.set(this.project() ? { ...this.project()! } : null);
+    this.editMode = false;
     });
   }
 
@@ -30,9 +29,10 @@ export class ProjectDetailsComponent {
 
   save()
   {
-    if(this.draft){
-      this.service.updateProject(this.draft)
-      this.editMode=false;
+    const draftValue = this.draft();
+    if(draftValue){
+      this.service.updateProject(draftValue)
+      this.editMode = false;
     }
   }
 }

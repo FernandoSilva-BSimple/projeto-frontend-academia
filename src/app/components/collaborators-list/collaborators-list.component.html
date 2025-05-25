@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let collaborator of collaboratorsList">
+      <tr *ngFor="let collaborator of collaboratorsList()">
         <td>{{ collaborator.name }}</td>
         <td>{{ collaborator.surname }}</td>
         <td>{{ collaborator.email }}</td>

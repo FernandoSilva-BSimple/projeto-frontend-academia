@@ -1,4 +1,4 @@
-import { Component,  computed} from '@angular/core';
+import { Component,  signal} from '@angular/core';
 import { Collaborator } from '../../interfaces/collaborator';
 import { CommonModule } from '@angular/common';
 import { CollaboratorsService } from '../../services/signals/collaborators.service';
@@ -12,11 +12,11 @@ import { HolidayPlansService } from '../../services/signals/holiday-plans.servic
   templateUrl: './collaborators-list.component.html'
 })
 export class CollaboratorsListComponent {
-  collaboratorsList: Collaborator[] = [];
+  collaboratorsList = signal<Collaborator[]>([])
 
   constructor(private service: CollaboratorsService, private holidaysService: HolidayPlansService) {
     effect(() => {
-      this.collaboratorsList = this.service.collaboratorsSignal();
+      this.collaboratorsList.set(this.service.collaboratorsSignal());
     });
   }
 

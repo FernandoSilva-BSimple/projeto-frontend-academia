@@ -1,9 +1,22 @@
-<form *ngIf="draft" (ngSubmit)="save()" class="details-card">
+<form *ngIf="draft()" (ngSubmit)="save()" class="details-card">
   <h3>Edit Holiday Plan</h3>
 
-  <div *ngFor="let pr of draft.periods; let i = index">
-    <input type="date" [(ngModel)]="draft.periods[i].initDate" name="init{{i}}">
-    <input type="date" [(ngModel)]="draft.periods[i].endDate"  name="end{{i}}">
+  <form *ngIf="draft() as d" (ngSubmit)="save()" class="details-card">
+  <h3>Edit Holiday Plan</h3>
+
+  <div *ngFor="let pr of d.periods; let i = index">
+    <input
+      type="date"
+      [ngModel]="pr.initDate"
+      (ngModelChange)="updatePeriod(i, 'initDate', $event)"
+      name="init{{i}}"
+    />
+    <input
+      type="date"
+      [ngModel]="pr.endDate"
+      (ngModelChange)="updatePeriod(i, 'endDate', $event)"
+      name="end{{i}}"
+    />
   </div>
 
   <button type="button" (click)="add()">Add Period</button>

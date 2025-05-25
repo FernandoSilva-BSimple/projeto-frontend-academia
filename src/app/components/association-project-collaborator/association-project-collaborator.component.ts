@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsService } from '../../services/signals/projects.service';
 import { CollaboratorsService } from '../../services/signals/collaborators.service';
-import { AssociationData } from '../../services/data/associations-data.service';
+import { AssociationsService } from '../../services/signals/associations.service';
 
 @Component({
   selector: 'app-association-project-collaborator',
@@ -11,24 +11,29 @@ import { AssociationData } from '../../services/data/associations-data.service';
   templateUrl: './association-project-collaborator.component.html',
 })
 export class AssociationProjectCollaboratorComponent {
-  projectAcronymsWithCollaborators: { acronym: string; collaborators: string[] }[] = [];
+  projectAcronymsWithCollaborators = signal<{ acronym: string; collaborators: string[] }[]>([]);
 
   constructor(
     private projectsService: ProjectsService,
-    private collaboratorsService: CollaboratorsService
+    private collaboratorsService: CollaboratorsService,
+    private associationsService: AssociationsService
   ) {
-    const associations = AssociationData.associations;
-    const projects = this.projectsService.projectsSignal();
-    const collaborators = this.collaboratorsService.collaboratorsSignal();
+    effect(() => {
+      const associations = this.associationsService.associationsSignal();
+      const projects = this.projectsService.projectsSignal();
+      const collaborators = this.collaboratorsService.collaboratorsSignal();
 
-    this.projectAcronymsWithCollaborators = projects.map(project => {
-      const associationProject = associations.filter(a => a.projectId === project.id);
-      const names = associationProject.map(a => {
-        const collab = collaborators.find(c => c.id === a.collaboratorId);
-        return collab ? collab.name : '—';
+      const result = projects.map(project => {
+        const associationProject = associations.filter(a => a.projectId === project.id);
+        const names = associationProject.map(a => {
+          const collab = collaborators.find(c => c.id === a.collaboratorId);
+          return collab ? collab.name : '—';
+        });
+
+        return { acronym: project.acronym, collaborators: names };
       });
 
-      return { acronym: project.acronym, collaborators: names };
+      this.projectAcronymsWithCollaborators.set(result);
     });
   }
 }

@@ -19,22 +19,22 @@
 
   <label class="details-item">
     <strong>Title:</strong>
-    <input [(ngModel)]="draft!.title" name="title"/>
+    <input [(ngModel)]="draft()!.title" name="title"/>
   </label>
 
   <label class="details-item">
     <strong>Acronym:</strong>
-    <input [(ngModel)]="draft!.acronym" name="acronym"/>
+    <input [(ngModel)]="draft()!.acronym" name="acronym"/>
   </label>
 
   <label class="details-item">
     <strong>Initial Date:</strong>
-    <input type="date" [(ngModel)]="draft!.initDate" name="initDate" />
+    <input type="date" [(ngModel)]="draft()!.initDate" name="initDate" />
   </label>
 
   <label class="details-item">
     <strong>End Date:</strong>
-    <input type="date" [(ngModel)]="draft!.endDate" name="endDate" />
+    <input type="date" [(ngModel)]="draft()!.endDate" name="endDate" />
   </label>
 
   <div class="actions">

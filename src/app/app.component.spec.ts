@@ -8,6 +8,8 @@ import { CollaboratorsService } from './services/signals/collaborators.service';
 import { Collaborator } from './interfaces/collaborator';
 import { HolidayPlan } from './interfaces/holiday-plan';
 import { HolidayPlansService } from './services/signals/holiday-plans.service';
+import { AssociationsService } from './services/signals/associations.service';
+import { Association } from './interfaces/association';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -16,18 +18,22 @@ describe('AppComponent', () => {
   let selectedHp: WritableSignal<HolidayPlan | null>;
   let editingHp: WritableSignal<HolidayPlan | null>;
   let collaborators: WritableSignal<Collaborator[]>;
+  let associations: WritableSignal<Association[]>
   let mockCollabService: any;
   let mockHpService: any;
+  let mockAssociationService: any;
 
   beforeEach(async () => {
     collaborators = signal<Collaborator[]>([]);
     selectedCollab = signal<Collaborator | null>(null);
     selectedHp = signal<HolidayPlan | null>(null);
     editingHp = signal<HolidayPlan | null>(null);
+    associations = signal<Association[]>([]);
 
     mockCollabService = {
       collaboratorsSignal: collaborators.asReadonly(),
       selectedSignal: selectedCollab.asReadonly(),
+      loadCollaboratorsFromDataService: () => {},
       loadCollaborators: (data: Collaborator[]) => collaborators.set(data),
       selectCollaborator: (c: Collaborator) => selectedCollab.set(c),
       updateCollaborator: (updated: Collaborator) => {
@@ -53,6 +59,11 @@ describe('AppComponent', () => {
       closeEditor: jasmine.createSpy('closeEditor').and.callFake(() => {
         editingHp.set(null);
       })
+    };
+
+    mockAssociationService = {
+      associationsSignal: associations.asReadonly(),
+      loadAssociationsFromDataService: () => {}
     }
 
     await TestBed.configureTestingModule({
@@ -64,7 +75,8 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: CollaboratorsService, useValue: mockCollabService },
-        { provide: HolidayPlansService, useValue: mockHpService}
+        { provide: HolidayPlansService, useValue: mockHpService},
+        {provide: AssociationsService, useValue: mockAssociationService}
       ]
     }).compileComponents();
 

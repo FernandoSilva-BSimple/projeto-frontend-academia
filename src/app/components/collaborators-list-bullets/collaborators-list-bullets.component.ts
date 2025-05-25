@@ -1,5 +1,5 @@
 import { Collaborator } from '../../interfaces/collaborator';
-import { Component, effect} from '@angular/core';
+import { Component,  signal, effect} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CollaboratorsService } from '../../services/signals/collaborators.service';
 import { RouterModule } from '@angular/router';
@@ -11,11 +11,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './collaborators-list-bullets.component.html'
 })
 export class CollaboratorsListBulletsComponent {
-  collaborators : Collaborator[] = [];
+  collaboratorsList = signal<Collaborator[]>([])
 
   constructor(private service : CollaboratorsService) {
     effect(() => {
-      this.collaborators = this.service.collaboratorsSignal();
+      this.collaboratorsList.set(this.service.collaboratorsSignal());
     })
   }
 

@@ -6,7 +6,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let entry of projectAcronymsWithCollaborators">
+    <tr *ngFor="let entry of projectAcronymsWithCollaborators()">
       <td>{{ entry.acronym }}</td>
       <td>{{ entry.collaborators.join(', ') }}</td>
     </tr>

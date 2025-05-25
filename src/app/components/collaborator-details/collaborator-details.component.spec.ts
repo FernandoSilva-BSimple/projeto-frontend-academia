@@ -39,11 +39,11 @@ describe('CollaboratorDetailsComponent', () => {
   });
 
   it('should have <p> with "Select a collaborator!" if no collaborator is provided', () => {
-    const bannerElement : HTMLElement = fixture.nativeElement;
-    const p = bannerElement.querySelector('p')!;
-
-    expect(p.textContent).toContain('Select a collaborator!');
-  });
+    const bannerElement: HTMLElement = fixture.nativeElement;
+    const p = bannerElement.querySelector('p');
+    expect(p).not.toBeNull();
+    expect(p?.textContent).toContain('Select a collaborator!');
+});
   
 
   it('shouldn´t have <form>', () => {
@@ -176,7 +176,7 @@ describe('CollaboratorDetailsComponent', () => {
   form.triggerEventHandler('ngSubmit', {});
   fixture.detectChanges();
 
-  expect(updateSpy).toHaveBeenCalledWith(component.draft);
+  expect(updateSpy).toHaveBeenCalledWith(component.draft());
 });
 
 });

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { signal, WritableSignal } from '@angular/core';
 import { Collaborator } from '../../interfaces/collaborator';
-import { CollaboratorsService } from '../../collaborators.service';
+import { CollaboratorsService } from '../../services/signals/collaborators.service';
 
 describe('CollaboratorsListComponent', () => {
   let component: CollaboratorsListComponent;
@@ -18,7 +18,8 @@ describe('CollaboratorsListComponent', () => {
 
     mockService = {
       collaboratorsSignal: collaboratorsSignal.asReadonly(),
-      selectCollaborator: jasmine.createSpy('selectCollaborator')
+      selectCollaborator: jasmine.createSpy('selectCollaborator'),
+      loadCollaboratorsFromDataService: () => {},
     };
 
     await TestBed.configureTestingModule({

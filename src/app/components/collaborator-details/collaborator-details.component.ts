@@ -1,4 +1,4 @@
-import { Component, computed, effect } from '@angular/core';
+import { Component, signal, effect } from '@angular/core';
 import { Collaborator } from '../../interfaces/collaborator';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,14 +12,14 @@ import { CollaboratorsService } from '../../services/signals/collaborators.servi
 })
 export class CollaboratorDetailsComponent {
   editMode = false;
-  draft?: Collaborator;
+  draft = signal<Collaborator | null>(null);
 
-  collaborator: Collaborator | null = null;
+  collaborator = signal<Collaborator | null >(null);
 
   constructor(private service: CollaboratorsService) {
   effect(() => {
-    this.collaborator = this.service.selectedSignal();
-    this.draft = this.collaborator ? { ...this.collaborator } : undefined;
+    this.collaborator.set(this.service.selectedSignal());
+    this.draft.set(this.collaborator() ? { ...this.collaborator()! } : null);
     this.editMode = false;
   });
 }
@@ -30,8 +30,9 @@ export class CollaboratorDetailsComponent {
 
   save()
   {
-    if(this.draft){
-      this.service.updateCollaborator(this.draft)
+    const draftValue = this.draft();
+    if(draftValue){
+      this.service.updateCollaborator(draftValue)
       this.editMode = false;
     }
    

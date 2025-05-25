@@ -1,6 +1,7 @@
-import { Component, computed } from '@angular/core';
+import { Component, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HolidayPlansService } from '../../services/signals/holiday-plans.service';
+import { HolidayPlan } from '../../interfaces/holiday-plan';
 
 @Component({
   selector: 'app-holiday-plan-details',
@@ -9,9 +10,13 @@ import { HolidayPlansService } from '../../services/signals/holiday-plans.servic
   templateUrl: './holiday-plan-details.component.html'
 })
 export class HolidayPlanDetailsComponent {
-  plan = computed(() => this.service.selectedSignal());
+  plan = signal<HolidayPlan | null>(null);
 
-  constructor(private service: HolidayPlansService) {}
+  constructor(private service: HolidayPlansService) {
+    effect(() => {
+      this.plan.set(this.service.selectedSignal());
+    })
+  }
 
   edit() { this.service.openEditor(); }
 }

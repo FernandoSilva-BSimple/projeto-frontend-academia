@@ -2,7 +2,7 @@
   <h2>Collaborators List</h2>
 
   <ul class="collaborators-list">
-    <li *ngFor="let collaborator of collaborators" class="collaborator-item">
+    <li *ngFor="let collaborator of collaboratorsList()" class="collaborator-item">
       <strong>Name:</strong> {{ collaborator.name }}<br>
       <strong>Surname:</strong> {{ collaborator.surname }}<br>
       <strong>Email:</strong> {{ collaborator.email }}<br>

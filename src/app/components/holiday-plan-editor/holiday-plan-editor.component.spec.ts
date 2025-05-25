@@ -104,7 +104,7 @@ describe('HolidayPlanEditorComponent', () => {
     const saveButton = fixture.nativeElement.querySelector('button[type="submit"]');
     saveButton.click();
 
-    expect(mockService.updatePlan).toHaveBeenCalledWith(component.draft);
+    expect(mockService.updatePlan).toHaveBeenCalledWith(component.draft());
   });
 
   it('should call closeEditor when Cancel is clicked', () => {
