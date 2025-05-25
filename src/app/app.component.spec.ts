@@ -34,18 +34,26 @@ describe('AppComponent', () => {
     projectsModalVisible = signal(false);
     projectsModalContext = signal(null);
 
-    mockCollabService = {
-      collaboratorsSignal: collaborators.asReadonly(),
-      selectedSignal: selectedCollab.asReadonly(),
-      loadCollaboratorsFromDataService: () => {},
-      loadCollaborators: (data: Collaborator[]) => collaborators.set(data),
-      selectCollaborator: (c: Collaborator) => selectedCollab.set(c),
-      updateCollaborator: (updated: Collaborator) => {
-        const updatedList = collaborators().map(c => c.id === updated.id ? updated : c);
-        collaborators.set(updatedList);
-        selectedCollab.set(updated);
-      }
-    };
+   mockCollabService = {
+    collaboratorsSignal: collaborators.asReadonly(),
+    selectedSignal: selectedCollab.asReadonly(),
+
+    loadCollaboratorsFromDataService: jasmine.createSpy('loadCollaboratorsFromDataService'),
+
+    loadCollaborators: jasmine.createSpy('loadCollaborators').and.callFake((data: Collaborator[]) => {
+    collaborators.set(data);
+  }),
+
+    selectCollaborator: jasmine.createSpy('selectCollaborator').and.callFake((c: Collaborator) => {
+    selectedCollab.set(c);
+  }),
+
+    updateCollaborator: jasmine.createSpy('updateCollaborator').and.callFake((updated: Collaborator) => {
+    const updatedList = collaborators().map(c => c.id === updated.id ? updated : c);
+    collaborators.set(updatedList);
+    selectedCollab.set(updated);
+  })
+};
 
     mockHpService = {
       selectedSignal: selectedHp.asReadonly(),
@@ -240,8 +248,4 @@ const bulletNameValues = bulletElements.map(el => el.textContent?.trim() ?? '');
 
 expect(tableNameValues).toEqual(bulletNameValues);
 });
-
-
-
-
 });
