@@ -1,13 +1,9 @@
-<div class="collaborators-list-container">
-  <h2>Collaborators List</h2>
-
-  <ul class="collaborators-list">
-    <li *ngFor="let collaborator of collaboratorsList()" class="collaborator-item">
-      <strong>Name:</strong> {{ collaborator.name }}<br>
-      <strong>Surname:</strong> {{ collaborator.surname }}<br>
-      <strong>Email:</strong> {{ collaborator.email }}<br>
-      <button (click)="selectCollaborator(collaborator)" aria-label="See Details" class="details-button">🔍</button>
-    </li>
-  </ul>
-</div>
-
+<ul class="collaborators-list">
+  <li *ngFor="let collaborator of collaboratorsList()" class="collaborator-item">
+    <span class="full-name" data-testid="collab-full-name">
+      {{ collaborator.name }} {{ collaborator.surname }}
+    </span><br>
+    <strong>Email:</strong> {{ collaborator.email }}<br>
+    <button (click)="selectCollaborator(collaborator)" aria-label="See Details" class="details-button">🔍</button>
+  </li>
+</ul>

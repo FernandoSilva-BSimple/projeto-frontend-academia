@@ -19,6 +19,8 @@ describe('AppComponent', () => {
   let editingHp: WritableSignal<HolidayPlan | null>;
   let collaborators: WritableSignal<Collaborator[]>;
   let associations: WritableSignal<Association[]>
+  let projectsModalVisible: WritableSignal<boolean>;
+  let projectsModalContext: WritableSignal<'collaborator' | 'project' | null>;
   let mockCollabService: any;
   let mockHpService: any;
   let mockAssociationService: any;
@@ -29,6 +31,8 @@ describe('AppComponent', () => {
     selectedHp = signal<HolidayPlan | null>(null);
     editingHp = signal<HolidayPlan | null>(null);
     associations = signal<Association[]>([]);
+    projectsModalVisible = signal(false);
+    projectsModalContext = signal(null);
 
     mockCollabService = {
       collaboratorsSignal: collaborators.asReadonly(),
@@ -63,7 +67,14 @@ describe('AppComponent', () => {
 
     mockAssociationService = {
       associationsSignal: associations.asReadonly(),
-      loadAssociationsFromDataService: () => {}
+      projectsModalVisibleSignal: projectsModalVisible.asReadonly(),
+      projectsModalContextSignal: projectsModalContext.asReadonly(),
+      colabAssociationsSignal: signal([]).asReadonly(),
+      projectAssociationsSignal: signal([]).asReadonly(),
+      selectedProjectsCollaboratorSignal: signal(null).asReadonly(),
+      selectedCollaboratorsProjectSignal: signal(null).asReadonly(),
+      loadAssociationsFromDataService: () => {},
+      closeProjectsModal: () => {}      
     }
 
     await TestBed.configureTestingModule({
@@ -210,19 +221,24 @@ describe('AppComponent', () => {
   mockCollabService.loadCollaborators(testData);
   fixture.detectChanges();
 
-  const tableNameValues = Array.from(
-    fixture.nativeElement.querySelectorAll('.collaborators-table tbody tr td:first-child')
-  ).map(cell => (cell as HTMLElement).textContent?.trim());
+ const rows = Array.from(
+  fixture.nativeElement.querySelectorAll('.collaborators-table tbody tr')
+) as HTMLTableRowElement[];
 
-  const bulletNames = Array.from(
-    fixture.nativeElement.querySelectorAll('.collaborators-list li')
-  ).map(li => {
-    const text = (li as HTMLElement).textContent ?? '';
-    const match = text.match(/Name:\s*(\w+)/);
-    return match?.[1];
-  });
+const tableNameValues = rows.map(row => {
+  const cells = row.querySelectorAll('td');
+  const name = cells[0]?.textContent?.trim() ?? '';
+  const surname = cells[1]?.textContent?.trim() ?? '';
+  return `${name} ${surname}`;
+});
 
-  expect(tableNameValues).toEqual(bulletNames);
+const bulletElements = Array.from(
+  fixture.nativeElement.querySelectorAll('[data-testid="collab-full-name"]')
+) as HTMLElement[];
+
+const bulletNameValues = bulletElements.map(el => el.textContent?.trim() ?? '');
+
+expect(tableNameValues).toEqual(bulletNameValues);
 });
 
 

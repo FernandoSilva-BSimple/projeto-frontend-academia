@@ -13,6 +13,12 @@ describe('AssociationProjectCollaboratorComponent', () => {
   let mockAssociations: WritableSignal<Association[]>;
   let mockProjects: WritableSignal<Project[]>;
   let mockCollaborators: WritableSignal<Collaborator[]>;
+  let projectsModalVisible: WritableSignal<boolean>;
+  let projectsModalContext: WritableSignal<'collaborator' | 'project' | null>;
+  let colabAssociations: WritableSignal<Association[]>;
+  let projectAssociations: WritableSignal<Association[]>;
+  let selectedProjectsCollaborator: WritableSignal<Collaborator | null>;
+  let selectedCollaboratorsProject: WritableSignal<Project | null>;
 
   beforeEach(async () => {
     mockAssociations = signal<Association[]>([
@@ -27,14 +33,27 @@ describe('AssociationProjectCollaboratorComponent', () => {
       { id: 1, name: 'Ana', surname: 'Silva', email: 'ana@email.com', initDate: new Date(), endDate: new Date() }
     ]);
 
+    projectsModalVisible = signal(true);
+    projectsModalContext = signal('collaborator');
+    colabAssociations = signal(mockAssociations());
+    projectAssociations = signal([]);
+    selectedProjectsCollaborator = signal(mockCollaborators()[0]);
+    selectedCollaboratorsProject = signal(null);
+
     await TestBed.configureTestingModule({
       imports: [AssociationProjectCollaboratorComponent],
       providers: [
         {
           provide: AssociationsService,
           useValue: {
-            associationsSignal: mockAssociations.asReadonly()
-          }
+          associationsSignal: mockAssociations.asReadonly(),
+          projectsModalVisibleSignal: projectsModalVisible.asReadonly,
+          projectsModalContextSignal: projectsModalContext.asReadonly,
+          colabAssociationsSignal: colabAssociations.asReadonly,
+          projectAssociationsSignal: projectAssociations.asReadonly,
+          selectedProjectsCollaboratorSignal: selectedProjectsCollaborator.asReadonly,
+          selectedCollaboratorsProjectSignal: selectedCollaboratorsProject.asReadonly,
+          closeProjectsModal: jasmine.createSpy()          }
         },
         {
           provide: ProjectsService,
