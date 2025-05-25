@@ -1,8 +1,11 @@
-import { Component, signal, effect } from '@angular/core';
+import { Component, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Association } from '../../interfaces/association';
+import { Collaborator } from '../../interfaces/collaborator';
+import { Project } from '../../interfaces/project';
+import { AssociationsService } from '../../services/signals/associations.service';
 import { ProjectsService } from '../../services/signals/projects.service';
 import { CollaboratorsService } from '../../services/signals/collaborators.service';
-import { AssociationsService } from '../../services/signals/associations.service';
 
 @Component({
   selector: 'app-association-project-collaborator',
@@ -11,29 +14,58 @@ import { AssociationsService } from '../../services/signals/associations.service
   templateUrl: './association-project-collaborator.component.html',
 })
 export class AssociationProjectCollaboratorComponent {
-  projectAcronymsWithCollaborators = signal<{ acronym: string; collaborators: string[] }[]>([]);
+  selectedCollaborator = signal<Collaborator | null>(null);
+  selectedProject = signal<Project | null>(null);
+  associations = signal<Association[]>([]);
+  visible = signal(false);
+  context = signal<'collaborator' | 'project' | null>(null);
+
+  associatedProjects = computed(() => {
+    const allProjects = this.projectsService.projectsSignal();
+    return this.associations().map(assoc => {
+      const project = allProjects.find(p => p.id === assoc.projectId);
+      return {
+        title: project?.title ?? '—',
+        acronym: project?.acronym ?? '—',
+        assocInitDate: assoc.initDate,
+        assocEndDate: assoc.endDate,
+      };
+    });
+  });
+
+  associatedCollaborators = computed(() => {
+    const allCollaborators = this.collaboratorsService.collaboratorsSignal();
+    return this.associations().map(assoc => {
+      const collab = allCollaborators.find(c => c.id === assoc.collaboratorId);
+      return {
+        name: collab?.name ?? '—',
+        surname: collab?.surname ?? '',
+        assocInitDate: assoc.initDate,
+        assocEndDate: assoc.endDate,
+      };
+    });
+  });
 
   constructor(
+    private associationsService: AssociationsService,
     private projectsService: ProjectsService,
-    private collaboratorsService: CollaboratorsService,
-    private associationsService: AssociationsService
+    private collaboratorsService: CollaboratorsService
   ) {
     effect(() => {
-      const associations = this.associationsService.associationsSignal();
-      const projects = this.projectsService.projectsSignal();
-      const collaborators = this.collaboratorsService.collaboratorsSignal();
+      this.visible.set(this.associationsService.projectsModalVisibleSignal());
+      this.context.set(this.associationsService.projectsModalContextSignal());
 
-      const result = projects.map(project => {
-        const associationProject = associations.filter(a => a.projectId === project.id);
-        const names = associationProject.map(a => {
-          const collab = collaborators.find(c => c.id === a.collaboratorId);
-          return collab ? collab.name : '—';
-        });
-
-        return { acronym: project.acronym, collaborators: names };
-      });
-
-      this.projectAcronymsWithCollaborators.set(result);
+      if (this.context() === 'collaborator') {
+        this.selectedCollaborator.set(this.associationsService.selectedProjectsCollaboratorSignal());
+        this.associations.set(this.associationsService.colabAssociationsSignal());
+      } else if (this.context() === 'project') {
+        this.selectedProject.set(this.associationsService.selectedCollaboratorsProjectSignal());
+        this.associations.set(this.associationsService.projectAssociationsSignal());
+      }
     });
+  }
+
+  close() {
+    this.associationsService.closeProjectsModal();
   }
 }

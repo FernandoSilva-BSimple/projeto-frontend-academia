@@ -7,15 +7,16 @@
                 <th>Title</th>
                 <th>Acronym</th>
                 <th>Details</th>
+                <th>Collaborators</th>
+
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let project of projectsList()">
                 <td>{{project.title}}</td>
                 <td>{{project.acronym}}</td>
-                <td>
-                    <button (click)="selectProject(project)" aria-label="See Details" class="details-button">🔍</button>
-                </td>
+                <td><button (click)="selectProject(project)" aria-label="See Details" class="details-button">🔍</button></td>
+                <td><button (click)="showCollaborators(project)">See Collaborators</button></td>
             </tr>
         </tbody>
     </table>

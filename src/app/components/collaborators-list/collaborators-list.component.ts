@@ -5,6 +5,7 @@ import { CollaboratorsService } from '../../services/signals/collaborators.servi
 import { RouterModule } from '@angular/router';
 import { effect } from '@angular/core';
 import { HolidayPlansService } from '../../services/signals/holiday-plans.service';
+import { AssociationsService } from '../../services/signals/associations.service';
 
 @Component({
   selector: 'app-collaborators-list',
@@ -14,7 +15,7 @@ import { HolidayPlansService } from '../../services/signals/holiday-plans.servic
 export class CollaboratorsListComponent {
   collaboratorsList = signal<Collaborator[]>([])
 
-  constructor(private service: CollaboratorsService, private holidaysService: HolidayPlansService) {
+  constructor(private service: CollaboratorsService, private holidaysService: HolidayPlansService, private associationsService: AssociationsService) {
     effect(() => {
       this.collaboratorsList.set(this.service.collaboratorsSignal());
     });
@@ -26,5 +27,9 @@ export class CollaboratorsListComponent {
 
   showHolidays(collaborator: Collaborator){
     this.holidaysService.selectPlanByCollaborator(collaborator.id);
+  }
+
+  showProjects(collaborator: Collaborator){
+    this.associationsService.selectProjectsForCollaborator(collaborator);
   }
 }

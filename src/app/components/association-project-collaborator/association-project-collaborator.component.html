@@ -1,14 +1,27 @@
-<table>
-  <thead>
-    <tr>
-      <th>Project</th>
-      <th>Collaborators</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let entry of projectAcronymsWithCollaborators()">
-      <td>{{ entry.acronym }}</td>
-      <td>{{ entry.collaborators.join(', ') }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="visible()" class="projects-modal">
+  <ng-container [ngSwitch]="context()">
+
+    <ng-container *ngSwitchCase="'collaborator'">
+      <h2>Projects for {{ selectedCollaborator()?.name }}</h2>
+      <ul>
+        <li *ngFor="let proj of associatedProjects()">
+          <strong>{{ proj.title }}</strong> ({{ proj.acronym }}) <br />
+          From: {{ proj.assocInitDate | date }} to {{ proj.assocEndDate | date }}
+        </li>
+      </ul>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'project'">
+      <h2>Collaborators for {{ selectedProject()?.title }}</h2>
+      <ul>
+        <li *ngFor="let collab of associatedCollaborators()">
+          <strong>{{ collab.name }} {{ collab.surname }}</strong><br />
+          From: {{ collab.assocInitDate | date }} to {{ collab.assocEndDate | date }}
+        </li>
+      </ul>
+    </ng-container>
+
+  </ng-container>
+
+  <button (click)="close()">Close</button>
+</div>
