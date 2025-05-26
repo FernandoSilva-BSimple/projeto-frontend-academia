@@ -71,14 +71,9 @@ export class AssociationProjectCollaboratorComponent {
       this.context.set(this.associationsService.projectsModalContextSignal());
       this.associations.set(this.associationsService.filteredAssociationsSignal())
 
-      if (this.context() === 'collaborator') {
+      this.context() === 'collaborator' ? this.selectedCollaborator.set(this.associationsService.selectedProjectsCollaboratorSignal())
+                                        : this.selectedProject.set(this.associationsService.selectedCollaboratorsProjectSignal());
 
-        this.selectedCollaborator.set(this.associationsService.selectedProjectsCollaboratorSignal());
-
-      } else if (this.context() === 'project') {
-
-        this.selectedProject.set(this.associationsService.selectedCollaboratorsProjectSignal());
-      }
     });
   }
 
