@@ -11,6 +11,7 @@ import { CollaboratorsService } from '../../services/signals/collaborators.servi
   styleUrl: "./collaborator-details.component.css"
 })
 export class CollaboratorDetailsComponent {
+  
   editMode = false;
   draft = signal<Collaborator | null>(null);
 
@@ -28,14 +29,14 @@ export class CollaboratorDetailsComponent {
 
   cancel() {this.editMode = false};
 
-  save()
-  {
+  save(){
+
     const draftValue = this.draft();
+
     if(draftValue){
       this.service.updateCollaborator(draftValue)
       this.editMode = false;
     }
-   
   }
   
 }
