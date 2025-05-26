@@ -22,6 +22,7 @@ export class AssociationProjectCollaboratorComponent {
   visible = signal(false);
   context = signal<'collaborator' | 'project' | null>(null);
 
+
   associatedProjects = computed(() => {
 
     const allProjects = this.projectsService.projectsSignal();
@@ -40,6 +41,7 @@ export class AssociationProjectCollaboratorComponent {
       };
     });
   });
+
 
   associatedCollaborators = computed(() => {
 
@@ -60,6 +62,7 @@ export class AssociationProjectCollaboratorComponent {
     });
   });
 
+
   constructor(
     private associationsService: AssociationsService,
     private projectsService: ProjectsService,
@@ -76,6 +79,7 @@ export class AssociationProjectCollaboratorComponent {
 
     });
   }
+  
 
   close() {
     this.associationsService.closeProjectsModal();
