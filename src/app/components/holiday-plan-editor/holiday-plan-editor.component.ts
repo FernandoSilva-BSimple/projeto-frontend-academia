@@ -1,9 +1,9 @@
-import { Component, computed, effect, signal, WritableSignal } from '@angular/core';
+import { Component, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HolidayPlan } from '../../interfaces/holiday-plan';
-import { HolidayPlansService } from '../../services/signals/holiday-plans.service';
 import { HolidayPeriod } from '../../interfaces/holiday-period';
+import { HolidayPlansService } from '../../services/signals/holiday-plans.service';
 
 @Component({
   selector: 'app-holiday-plan-editor',
@@ -12,24 +12,25 @@ import { HolidayPeriod } from '../../interfaces/holiday-period';
   templateUrl: './holiday-plan-editor.component.html'
 })
 export class HolidayPlanEditorComponent {
+  editMode = signal(true);
   draft = signal<HolidayPlan | null>(null);
-
-  editing = computed(() => this.service.editingSignal());
 
   constructor(private service: HolidayPlansService) {
     effect(() => {
-      const p = this.editing();
-      if (p) {
+      const plan = this.service.editingSignal();
+      if (plan) {
         this.draft.set({
-          ...p,
-          periods: p.periods.map((period: HolidayPeriod) => ({
+          ...plan,
+          periods: plan.periods.map(period => ({
             ...period,
             initDate: this.formatDate(new Date(period.initDate)),
-            endDate: this.formatDate(new Date(period.endDate))
-          }))
+            endDate: this.formatDate(new Date(period.endDate)),
+          })),
         });
+        this.editMode.set(true);
       } else {
         this.draft.set(null);
+        this.editMode.set(false);
       }
     });
   }
@@ -37,37 +38,20 @@ export class HolidayPlanEditorComponent {
   add() {
     const current = this.draft();
     if (!current) return;
-
     const newPeriod: HolidayPeriod = {
       id: current.periods.length + 1,
       initDate: this.formatDate(new Date()),
-      endDate: this.formatDate(new Date())
+      endDate: this.formatDate(new Date()),
     };
-
-    this.draft.set({
-      ...current,
-      periods: [...current.periods, newPeriod]
-    });
+    this.draft.set({ ...current, periods: [...current.periods, newPeriod] });
   }
 
   save() {
-    const current = this.draft();
-    if (current) {
-      this.service.updatePlan(current);
+    if (this.draft()) {
+      this.service.updatePlan(this.draft()!);
+      this.editMode.set(false);
     }
   }
-
-  updatePeriod(index: number, field: 'initDate' | 'endDate', value: string) {
-  const current = this.draft();
-  if (!current) return;
-
-  const updatedPeriods = current.periods.map((period, i) =>
-    i === index ? { ...period, [field]: value } : period
-  );
-
-  this.draft.set({ ...current, periods: updatedPeriods });
-}
-
 
   cancel() {
     this.service.closeEditor();
