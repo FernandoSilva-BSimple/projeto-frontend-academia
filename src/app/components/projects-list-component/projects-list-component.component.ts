@@ -24,8 +24,7 @@ export class ProjectsListComponent {
     this.service.selectProject(project);
   }
 
-  
-    showCollaborators(project: Project){
-      this.associationsService.selectCollaboratorsForProject(project);
-    }
+  showCollaborators(project: Project){
+    this.associationsService.selectAssociations(project, 'project');
+  }
 }

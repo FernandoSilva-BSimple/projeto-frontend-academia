@@ -30,6 +30,6 @@ export class CollaboratorsListComponent {
   }
 
   showProjects(collaborator: Collaborator){
-    this.associationsService.selectProjectsForCollaborator(collaborator);
+    this.associationsService.selectAssociations(collaborator, "collaborator");
   }
 }

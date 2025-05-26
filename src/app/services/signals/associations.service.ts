@@ -7,16 +7,14 @@ import { AssociationsDataService } from '../data/associations-data.service';
 @Injectable({ providedIn: 'root' })
 export class AssociationsService {
   private associations = signal<Association[]>([]);
-  private collabAssociations = signal<Association[]>([]);
-  private projectAssociations = signal<Association[]>([]);
+  private filteredAssociations = signal<Association[]>([]);
   private selectedProjectsCollaborator = signal<Collaborator | null>(null);
   private selectedCollaboratorsProject = signal<Project | null>(null);
   private projectsModalVisible = signal(false);
   private projectsModalContext = signal<'collaborator' | 'project' | null>(null);
 
   readonly associationsSignal = this.associations.asReadonly();
-  readonly colabAssociationsSignal = this.collabAssociations.asReadonly();
-  readonly projectAssociationsSignal = this.projectAssociations.asReadonly();
+  readonly filteredAssociationsSignal = this.filteredAssociations.asReadonly();
   readonly selectedProjectsCollaboratorSignal = this.selectedProjectsCollaborator.asReadonly();
   readonly selectedCollaboratorsProjectSignal = this.selectedCollaboratorsProject.asReadonly();
   readonly projectsModalVisibleSignal = this.projectsModalVisible.asReadonly();
@@ -29,20 +27,22 @@ export class AssociationsService {
     this.associations.set(data.map(a => ({ ...a })));
   }
 
-  selectProjectsForCollaborator(collaborator: Collaborator) {
-    this.selectedProjectsCollaborator.set(collaborator);
-    const filtered = this.associations().filter(a => a.collaboratorId === collaborator.id);
-    this.collabAssociations.set(filtered);
-    this.projectsModalContext.set('collaborator');
-    this.openProjectsModal();
-  }
+  selectAssociations(entity: Collaborator | Project, context: 'collaborator' | 'project'){
 
-  selectCollaboratorsForProject(project: Project) {
-    this.selectedCollaboratorsProject.set(project);
-    const filtered = this.associations().filter(a => a.projectId === project.id);
-    this.projectAssociations.set(filtered);
-    this.projectsModalContext.set('project');
+    this.projectsModalContext.set(context);
     this.openProjectsModal();
+
+    if(context === 'collaborator'){
+      const collaborator = entity as Collaborator;
+      this.selectedProjectsCollaborator.set(collaborator);
+      const filtered = this.associations().filter(a => a.collaboratorId === collaborator.id);
+      this.filteredAssociations.set(filtered);
+    } else {
+      const project = entity as Project;
+      this.selectedCollaboratorsProject.set(project);
+      const filtered = this.associations().filter(a => a.projectId === project.id);
+      this.filteredAssociations.set(filtered);
+    }
   }
 
   openProjectsModal() {
@@ -54,7 +54,7 @@ export class AssociationsService {
     this.projectsModalContext.set(null);
     this.selectedProjectsCollaborator.set(null);
     this.selectedCollaboratorsProject.set(null);
-    this.collabAssociations.set([]);
-    this.projectAssociations.set([]);
+    this.filteredAssociations.set([]);
+
   }
 }

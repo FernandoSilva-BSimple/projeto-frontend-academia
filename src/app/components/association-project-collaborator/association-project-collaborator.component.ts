@@ -25,8 +25,8 @@ export class AssociationProjectCollaboratorComponent {
     return this.associations().map(assoc => {
       const project = allProjects.find(p => p.id === assoc.projectId);
       return {
-        title: project?.title ?? '—',
-        acronym: project?.acronym ?? '—',
+        title: project?.title,
+        acronym: project?.acronym,
         assocInitDate: assoc.initDate,
         assocEndDate: assoc.endDate,
       };
@@ -38,8 +38,8 @@ export class AssociationProjectCollaboratorComponent {
     return this.associations().map(assoc => {
       const collab = allCollaborators.find(c => c.id === assoc.collaboratorId);
       return {
-        name: collab?.name ?? '—',
-        surname: collab?.surname ?? '',
+        name: collab?.name,
+        surname: collab?.surname,
         assocInitDate: assoc.initDate,
         assocEndDate: assoc.endDate,
       };
@@ -57,11 +57,11 @@ export class AssociationProjectCollaboratorComponent {
 
       if (this.context() === 'collaborator') {
         this.selectedCollaborator.set(this.associationsService.selectedProjectsCollaboratorSignal());
-        this.associations.set(this.associationsService.colabAssociationsSignal());
       } else if (this.context() === 'project') {
         this.selectedProject.set(this.associationsService.selectedCollaboratorsProjectSignal());
-        this.associations.set(this.associationsService.projectAssociationsSignal());
       }
+
+      this.associations.set(this.associationsService.filteredAssociationsSignal())
     });
   }
 
